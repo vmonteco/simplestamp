@@ -1,0 +1,54 @@
+\NeedsTeXFormat{LaTeX3e}
+\PovidesPackage{stamppackage}[2024/01/28 Stamp LaTeX package]
+
+%% Packages required :
+%% tcolorbox (For the frame)
+\RequirePackage{tcolorbox}
+%% tikz (For tilting)
+\RequirePackage[tikz]
+
+%% Mode constants :
+%% Colors and opacity values :
+\newcommand{\strongstampbackgroundcolor}{red}
+\newcommand{\strongstampbackgroundopacity}{0.9}
+\newcommand{\strongstampbordercolor}{red}
+\newcommand{\strongstampborderopacity}{0.5}
+\newcommand{\strongstamptextcolor}{red}
+\newcommand{\strongstamptextopacity}{0.9}
+
+\newcommand{\regularstampbackgroundcolor}{black}
+\newcommand{\regularstampbackgroundopacity}{0.5}
+\newcommand{\regularstampbordercolor}{black}
+\newcommand{\regularstampborderopacity}{0.0}
+\newcommand{\regularstamptextcolor}{black}
+\newcommand{\regularstamptextopacity}{0.5}
+
+\newcommand{\discreetstampbackgroundcolor}{gray}
+\newcommand{\discreetstampbackgroundopacity}{0.4}
+\newcommand{\discreetstampbordercolor}{gray}
+\newcommand{\discreetstampborderopacity}{0.0}
+\newcommand{\discreetstamptextcolor}{gray}
+\newcommand{\discreetstamptextopacity}{0.4}
+
+
+\newcommand{\defaultmode}{strong}
+
+\newcommand{\mode}{\defaultmode}
+
+%% Set default mode :
+\DeclareOption{soft}{\renewcommand{\mode}{soft}}
+\DeclareOption{strong}{\renewcommand{\mode}{strong}}
+
+\DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+
+\ProcessOptions\relax
+
+
+%% Declare tools for stamping :
+
+%% Basic stamp ()
+
+%% "Motivated" stamp () :
+
+%% stamp :
+\newcommand{\stamp}
