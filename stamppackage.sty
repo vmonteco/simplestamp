@@ -1,20 +1,20 @@
-\NeedsTeXFormat{LaTeX3e}
-\PovidesPackage{stamppackage}[2024/01/28 Simple Stampx LaTeX package 0.0news.]
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{stamppackage}[2024/01/28 Simple Stampx LaTeX package 0.0news.]
 
 %% Packages required :
 %% tcolorbox (For the frame)
 \RequirePackage{tcolorbox}
-%% tikz (For tilting)
-\RequirePackage[tikz]
+%% %% tikz (For tilting)
+%% \RequirePackage{tikz}
 
 %% Mode constants :
 %% Colors and opacity values :
 \newcommand{\strongstampbackgroundcolor}{red}
-\newcommand{\strongstampbackgroundopacity}{0.9}
+\newcommand{\strongstampbackgroundopacity}{0.1}
 \newcommand{\strongstampbordercolor}{red}
 \newcommand{\strongstampborderopacity}{0.5}
 \newcommand{\strongstamptextcolor}{red}
-\newcommand{\strongstamptextopacity}{0.9}
+\newcommand{\strongstamptextopacity}{0.5}
 
 \newcommand{\regularstampbackgroundcolor}{black}
 \newcommand{\regularstampbackgroundopacity}{0.5}
@@ -59,15 +59,24 @@
 
 %% "Motivated" stamp () :
 
-%% stamp :
-\newcommand{\stamp}{
+%% base stamp :
+\newcommand{\basestamp}[1]{
   \begin{tcolorbox}[
       standard jigsaw,
       colback=\stampbackgroundcolor,
       opacityback=\stampbackgroundopacity,
       colframe=\stampbordercolor,
-      opacityframe=\stamporderopacity,
+      opacityframe=\stampborderopacity,
       coltext=\stamptextcolor,
       opacitytext=\stamptextopacity,
       width=\stampwidth
     ]
+    #1
+  \end{tcolorbox}
+}
+
+%% stamp :
+\newcommand{\stamp}[1]{
+  \basestamp{#1}
+}
+    
