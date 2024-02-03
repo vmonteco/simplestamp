@@ -40,15 +40,22 @@
 \newcommand{\stamptextcolor}{\strongstamptextcolor}
 \newcommand{\stamptextopacity}{\strongstamptextopacity}
 
-%% %% Set default mode :
-%% \newcommand{\mode}{\defaultmode}
+%% Modes :
+\newcommand{\strongmode}{strong} %% Default
+\newcommand{\regularmode}{regular}
+\newcommand{\discreetmode}{discreet}
 
-%% \DeclareOption{soft}{\renewcommand{\mode}{soft}}
-%% \DeclareOption{strong}{\renewcommand{\mode}{strong}}
+%% Set default mode :
+\newcommand{\defaultmode}{\strongmode}
+\newcommand{\mode}{\defaultmode}
 
-%% \DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+\DeclareOption{discreet}{\renewcommand{\mode}{\discreetmode}}
+\DeclareOption{regular}{\renewcommand{\mode}{\regularmode}}
+\DeclareOption{strong}{\renewcommand{\mode}{\strongmode}}
 
-%% \ProcessOptions\relax
+\DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+
+\ProcessOptions\relax
 
 
 %% Declare tools for stamping :
