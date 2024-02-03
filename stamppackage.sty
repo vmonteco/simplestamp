@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX3e}
-\PovidesPackage{stamppackage}[2024/01/28 Stamp LaTeX package]
+\PovidesPackage{stamppackage}[2024/01/28 Simple Stampx LaTeX package 0.0news.]
 
 %% Packages required :
 %% tcolorbox (For the frame)
@@ -30,18 +30,27 @@
 \newcommand{\discreetstamptextcolor}{gray}
 \newcommand{\discreetstamptextopacity}{0.4}
 
+\newcommand{\stampwidth}{15em}
 
+%% For now we hardcode the default values :
 \newcommand{\defaultmode}{strong}
 
-\newcommand{\mode}{\defaultmode}
+\newcommand{\stampbackgroundcolor}{\strongstampbackgroundcolor}
+\newcommand{\stampbackgroundopacity}{\strongstampbackgroundopacity}
+\newcommand{\stampbordercolor}{\strongstampbordercolor}
+\newcommand{\stampborderopacity}{\strongstampborderopacity}
+\newcommand{\stamptextcolor}{\strongstamptextcolor}
+\newcommand{\stamptextopacity}{\strongstamptextopacity}
 
-%% Set default mode :
-\DeclareOption{soft}{\renewcommand{\mode}{soft}}
-\DeclareOption{strong}{\renewcommand{\mode}{strong}}
+%% %% Set default mode :
+%% \newcommand{\mode}{\defaultmode}
 
-\DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+%% \DeclareOption{soft}{\renewcommand{\mode}{soft}}
+%% \DeclareOption{strong}{\renewcommand{\mode}{strong}}
 
-\ProcessOptions\relax
+%% \DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
+
+%% \ProcessOptions\relax
 
 
 %% Declare tools for stamping :
@@ -51,4 +60,14 @@
 %% "Motivated" stamp () :
 
 %% stamp :
-\newcommand{\stamp}
+\newcommand{\stamp}{
+  \begin{tcolorbox}[
+      standard jigsaw,
+      colback=\stampbackgroundcolor,
+      opacityback=\stampbackgroundopacity,
+      colframe=\stampbordercolor,
+      opacityframe=\stamporderopacity,
+      coltext=\stamptextcolor,
+      opacitytext=\stamptextopacity,
+      width=\stampwidth
+    ]
