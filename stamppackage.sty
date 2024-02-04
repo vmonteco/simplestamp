@@ -1,12 +1,17 @@
+%% ----------------------------------------------------------------------------
+%%                           SIMPLE STAMP
+%% ----------------------------------------------------------------------------
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{stamppackage}[2024/01/28 Simple Stampx LaTeX package 0.0news.]
+\newcommand{\simplestamppackagename}{simplestamp}
+\ProvidesPackage{\simplestamppackagename}[2024/01/28 Simple Stampx LaTeX package v0.0]
 
-%% Packages required :
+%% ------------------------ Package requirements ------------------------------
 %% tcolorbox (For the frame)
 \RequirePackage{tcolorbox}
 
-%% Mode constants :
-%% Colors and opacity values :
+%% ------------------------ Constants -----------------------------------------
+%% Mode constants
+%% Color and opacity values :
 \newcommand{\strongstampbackgroundcolor}{red}
 \newcommand{\strongstampbackgroundopacity}{0.1}
 \newcommand{\strongstampbordercolor}{red}
@@ -28,38 +33,99 @@
 \newcommand{\discreetstamptextcolor}{gray}
 \newcommand{\discreetstamptextopacity}{0.4}
 
+%% Dimensions :
 \newcommand{\stampwidth}{15em}
 
-%% For now we hardcode the default values :
-\newcommand{\defaultmode}{strong}
+%% ----------------------- Modes handling -------------------------------------
+\newcommand{\setstrongmode}{
+  \newcommand{\stampbackgroundcolor}{\strongstampbackgroundcolor}
+  \newcommand{\stampbackgroundopacity}{\strongstampbackgroundopacity}
+  \newcommand{\stampbordercolor}{\strongstampbordercolor}
+  \newcommand{\stampborderopacity}{\strongstampborderopacity}
+  \newcommand{\stamptextcolor}{\strongstamptextcolor}
+  \newcommand{\stamptextopacity}{\strongstamptextopacity}
+}
+\newcommand{\setregularmode}{
+  \newcommand{\stampbackgroundcolor}{\regularstampbackgroundcolor}
+  \newcommand{\stampbackgroundopacity}{\regularstampbackgroundopacity}
+  \newcommand{\stampbordercolor}{\regularstampbordercolor}
+  \newcommand{\stampborderopacity}{\regularstampborderopacity}
+  \newcommand{\stamptextcolor}{\regularstamptextcolor}
+  \newcommand{\stamptextopacity}{\regularstamptextopacity}
+}
+\newcommand{\setdiscreetmode}{
+  \newcommand{\stampbackgroundcolor}{\discreetstampbackgroundcolor}
+  \newcommand{\stampbackgroundopacity}{\discreetstampbackgroundopacity}
+  \newcommand{\stampbordercolor}{\discreetstampbordercolor}
+  \newcommand{\stampborderopacity}{\discreetstampborderopacity}
+  \newcommand{\stamptextcolor}{\discreetstamptextcolor}
+  \newcommand{\stamptextopacity}{\discreetstamptextopacity}
+}
 
-\newcommand{\stampbackgroundcolor}{\strongstampbackgroundcolor}
-\newcommand{\stampbackgroundopacity}{\strongstampbackgroundopacity}
-\newcommand{\stampbordercolor}{\strongstampbordercolor}
-\newcommand{\stampborderopacity}{\strongstampborderopacity}
-\newcommand{\stamptextcolor}{\strongstamptextcolor}
-\newcommand{\stamptextopacity}{\strongstamptextopacity}
+\newcommand{\setdefaultmode}{
+  \setstrongmode
+}
 
 %% Modes :
-\newcommand{\strongmode}{strong} %% Default
-\newcommand{\regularmode}{regular}
-\newcommand{\discreetmode}{discreet}
+\newcommand{\strongmodeoptionname}{strong}
+\newcommand{\regularmodeoptionname}{regular}
+\newcommand{\discreetmodeoptionname}{discreet}
+
+\newcommand{\strongmode}{\strongmodeoptionname} %% Default
+\newcommand{\regularmode}{\regularmodeoptionname}
+\newcommand{\discreetmode}{\discreetmodeoptionname}
 
 %% Set default mode :
 \newcommand{\defaultmode}{\strongmode}
-\newcommand{\mode}{\defaultmode}
 
-\DeclareOption{discreet}{\renewcommand{\mode}{\discreetmode}}
-\DeclareOption{regular}{\renewcommand{\mode}{\regularmode}}
-\DeclareOption{strong}{\renewcommand{\mode}{\strongmode}}
+%% -------------------------- Options handling --------------------------------
+%% Errors :
+\newcommand{\mutuallyexclusivemodeserror}{\PackageError{\simplestamppackagename}{Mutually exclusive options \discreetmodeoptionname, \regularmodeoptionname and \strongmodeoptionname.}{Mutually exclusive options \discreetmodeoptionname, \regularmodeoptionname and \strongmodeoptionname.\\Default is \strongmodeoptionname.}}
+
+
+%% Options :
+%% Modes flags :
+\newif\ifstrongmode
+\newif\ifregularmode
+\newif\ifdiscreetmode
+
+% Source for mutually exclusive options : https://tex.stackexchange.com/a/21184/88077
+\DeclareOption{\strongmodeoptionname}{
+  \ifregularmode\mutuallyexclusivemodeserror\fi
+  \ifdiscreetmode\mutuallyexclusivemodeserror\fi
+  \strongmodetrue
+}
+\DeclareOption{\regularmodeoptionname}{
+  \ifstrongmode\mutuallyexclusivemodeserror\fi
+  \ifdiscreetmode\mutuallyexclusivemodeserror\fi
+  \regularmodetrue
+}
+\DeclareOption{\discreetmodeoptionname}{
+  \ifstrongmode\mutuallyexclusivemodeserror\fi
+  \ifregularmode\mutuallyexclusivemodeserror\fi
+  \discreetmodetrue
+}
 
 \DeclareOption*{\PackageWarning{examplepackage}{Unknown ‘\CurrentOption’}}
 
 \ProcessOptions\relax
 
+%% Set mode :
+\ifstrongmode
+  \setstrongmode
+\else
+  \ifregularmode
+    \setregularmode
+  \else
+    \ifdiscreetmode
+      \setdiscreetmode
+    \else
+      \setdefaultmode
+    \fi
+  \fi
+\fi
 
-%% Declare tools for stamping :
-
+%% ----------------------- Commands definitions -------------------------------
 %% base stamp :
 \newcommand{\basestamp}[1]{
   \begin{tcolorbox}[
