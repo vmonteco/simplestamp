@@ -151,47 +151,37 @@
     
 %% whole page covering :
 %% Original snippet from https://tex.stackexchange.com/a/547785/88077
-
-%% TMP
-
-\newcommand*% Create new command (not long version)
-    \watermarktext% Name of the new command.
-    [1]{% Number of parameters
-        \leavevmode% Leave vertical mode. Switch to horizontal one -> boxes are stacked horizontally.
-        \hbox% Horizontal box
-        to 6\textwidth{% Sets horizontal box's width to 6 times the textarea's width
-            \leaders% Dixit Stack Exchange : Leaders are the TeX primitives used for creating repetitions of a box to fill up a space, for example in the Table of Contents. 
-            \vbox% Vertical box
-            to 4\textheight{% Setx vertical box height to 4 times the text aera height.
-                \leaders% Cf. L14
-                \vbox{
-                    \hbox{% Horizontal box.
-                        #1% The parameter the new command gets.
-                        \hskip 4cm% A fixed width hozirontal glue
-                    }%
-                    \vskip 4cm%
-                }%
-% I guess some vertical glue between elements to space them a bit would have to be put here?
-                \vfil% "Infinite vertigal glue"?
-            }%
-        \hfil% "Infinite horizontal glue"?
+\newcommand{\wholepagestamping}[1]{%
+  \tikz[%
+    remember picture,%
+    overlay%
+  ]%
+  \node [%
+    black,%
+    opacity=0.1,%
+    rotate=45,%
+    scale=1.0%
+  ]%
+  at (current page.center)%
+  {%
+    \leavevmode% Leave vertical mode. Switch to horizontal one -> boxes are stacked horizontally.
+    \hbox% Horizontal box
+    to 6\textwidth{% Sets horizontal box's width to 6 times the textarea's width
+      \leaders% Dixit Stack Exchange : Leaders are the TeX primitives used for creating repetitions of a box to fill up a space, for example in the Table of Contents. 
+      \vbox% Vertical box
+      to 4\textheight{% Setx vertical box height to 4 times the text aera height.
+        \leaders% Cf. L14
+        \vbox{
+          \hbox{% Horizontal box.
+            #1% The parameter the new command gets.
+            \hskip 4cm% A fixed width hozirontal glue
+          }%
+          \vskip 4cm%
+        }%
+        % I guess some vertical glue between elements to space them a bit would have to be put here?
+        \vfil% "Infinite vertigal glue"?
+      }%
+      \hfil% "Infinite horizontal glue"?
     }%
-}
-
-\newcommand{\watermark}{%
-    \tikz[%
-        remember picture,%
-        overlay%
-    ]%
-    \node [%
-        black,%
-        opacity=0.1,%
-        rotate=45,%
-        scale=1.0%
-    ]%
-    at (current page.center)%
-    {%
-        \watermarktext{\stamp{FOO}}%
-    };%
-}
-%% TMP END
+  };%
+} 
