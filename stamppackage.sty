@@ -40,7 +40,7 @@
 \newcommand{\discreetstamptextopacity}{0.1}
 
 %% Dimensions :
-\newcommand{\stampwidth}{15em}
+\newcommand{\stampwidth}{18em}
 
 %% ----------------------- Modes handling -------------------------------------
 \newcommand{\setstrongmode}{
@@ -216,17 +216,37 @@
 
 %% ------------------------- I18n handling ------------------------------------
 
-\newcommand{\motivatedtexten}[3]{Addressee: #1\\Motive : #2\\Edition date: #3}
-\newcommand{\motivatedtextfr}[3]{Destinataire : #1\\Objet : #2\\Date d'édition: #3}
+%% Set 
 
-\NewMultilangCmd{\multilangmotivatedtext}{
-  command=\motivatedtext, %% The existing command
-  margs={pattern, addressee, motive, date}, %% Csvlist, 
-  %%oargs={},
-  %%defaults={pattern=\motivatedtexten},
+\newcommand{\motivatedtexten}[3]{Addressee:\hspace{\fill}#1\\Motive:\hspace{\fill}#2\\Edition date:\hspace{\fill}#3}
+\newcommand{\motivatedtextfr}[3]{Destinataire :\hspace{\fill}#1\\Objet :\hspace{\fill}#2\\Date d'édition :\hspace{\fill}#3}
+
+\NewMultilangCmd{\privatemultilangmotivatedtext}{
+  command=\motivatedtext,
+  margs={pattern, addressee, motive, date},
 }
 
-\NewMultilangCmd{\multilangmotivatedstamp}{
+\NewMultilangCmd{\privatemultilangmotivatedstamp}{
   command=\motivatedstamp,
   margs={pattern, addressee, motive, date},
+}
+
+\newcommand{\multilangmotivatedtext}[3][\today]{
+  \privatemultilangmotivatedtext{
+    pattern/french=\motivatedtextfr,
+    pattern/english=\motivatedtexten,
+    date=#1,
+    addressee=#2,
+    motive=#3,
+  }
+}
+
+\newcommand{\multilangmotivatedstamp}[3][\today]{
+  \privatemultilangmotivatedstamp{
+    pattern/french=\motivatedtextfr,
+    pattern/english=\motivatedtexten,
+    date=#1,
+    addressee=#2,
+    motive=#3,
+  }
 }

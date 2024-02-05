@@ -2,19 +2,6 @@
 \usepackage[french]{babel}
 \usepackage{stamppackage}
 \begin{document}
-\multilangmotivatedtext{
-  pattern/english={\motivatedtexten},
-  pattern/french={\motivatedtextfr},
-  addressee={John Smith},
-  motive={Motive},
-  date={\today},
-}
-
-\multilangmotivatedstamp{
-  pattern/english={\motivatedtexten},
-  pattern/french={\motivatedtextfr},
-  addressee={John Smith},
-  motive={Motive},
-  date={\today},
-}
+\multilangmotivatedtext{John Smith}{Motive}
+\multilangmotivatedstamp{John Smith}{Motive}
 \end{document}
