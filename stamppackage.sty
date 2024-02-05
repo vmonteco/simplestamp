@@ -12,6 +12,8 @@
 \RequirePackage{tikz}
 %% eso-pic (for coordinated stamps)
 \RequirePackage{eso-pic}
+%% multilang (for i18n)
+\RequirePackage[languages={english,french}]{multilang}
 
 %% ------------------------ Constants -----------------------------------------
 %% Mode constants
@@ -203,4 +205,28 @@
 %% Signature
 \newcommand{\coordinatedsignature}[3]{
   \coordinated{#1}{#2}{#3}
+}
+
+%% Motivated stamp :
+\newcommand{\motivatedtext}[4]{#1{#2}{#3}{#4}}
+
+\newcommand{\motivatedstamp}[4]{
+  \stamp{\motivatedtext{#1}{#2}{#3}{#4}}
+} 
+
+%% ------------------------- I18n handling ------------------------------------
+
+\newcommand{\motivatedtexten}[3]{Addressee: #1\\Motive : #2\\Edition date: #3}
+\newcommand{\motivatedtextfr}[3]{Destinataire : #1\\Objet : #2\\Date d'édition: #3}
+
+\NewMultilangCmd{\multilangmotivatedtext}{
+  command=\motivatedtext, %% The existing command
+  margs={pattern, addressee, motive, date}, %% Csvlist, 
+  %%oargs={},
+  %%defaults={pattern=\motivatedtexten},
+}
+
+\NewMultilangCmd{\multilangmotivatedstamp}{
+  command=\motivatedstamp,
+  margs={pattern, addressee, motive, date},
 }
