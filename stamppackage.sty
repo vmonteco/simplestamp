@@ -191,21 +191,13 @@
 %% Coordinated
 
 \newcommand{\coordinated}[3]{
-  %% \fbox{
-  %%   \begin{tikzpicture}[remember picture,overlay, anchor=north west, xshift=100, yshift=100]
-  %%     \fbox{\node[anchor=north west, xshift=#1,yshift=#2]{#3};}
-  %%   \end{tikzpicture}
-  %% }
-  %% \begin{tikzpicture}[remember picture,overlay]
-  %%   \node[anchor=north west, xshift=#1,yshift=#2]{\stamp{1}}
-  %% \end{tikzpicture}
   \AddToShipoutPictureBG*{\put(#1,#2){#3}}
 }
 
 %% Stamped and coordinated
 \newcommand{\stampedcoordinated}[4]{
   \coordinated{#1}{#2}{#3}
-  \coordinated{#1}{#2}{#4}
+  \coordinated{#1}{#2+20pt}{#4}
 }
 
 %% Signature
